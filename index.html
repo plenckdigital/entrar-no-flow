@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar no Flow — O protocolo mental do futebol de alto rendimento</title>
+<meta name="description" content="O protocolo mental que atletas profissionais usam para atingir o estado de alta performance. Para jogadores de futebol de todos os níveis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1aff8c;
+    --green-dim: #1D9E75;
+    --green-dark: #0a5c40;
+    --dark: #060a08;
+    --dark2: #0d1510;
+    --dark3: #111a14;
+    --gray: #8a9e93;
+    --white: #f0f5f2;
+    --accent: #c8ff00;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: .4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(26,255,140,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green-dim), transparent);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    border: 1px solid rgba(26,255,140,0.3);
+    padding: .4rem 1.1rem;
+    border-radius: 100px;
+    font-size: .75rem;
+    font-weight: 500;
+    letter-spacing: .12em;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp .8s .2s forwards;
+    backdrop-filter: blur(10px);
+    background: rgba(26,255,140,0.05);
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .4; transform: scale(.8); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp .8s .35s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(6rem, 18vw, 14rem);
+    line-height: .88;
+    letter-spacing: -.01em;
+    color: var(--white);
+    margin-bottom: .4rem;
+    opacity: 0;
+    animation: fadeUp .9s .5s forwards;
+  }
+
+  .hero-title span {
+    color: var(--green);
+    display: block;
+    -webkit-text-stroke: 2px var(--green);
+    color: transparent;
+    text-shadow: 0 0 60px rgba(26,255,140,0.4);
+  }
+
+  .hero-subtitle {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    color: var(--gray);
+    max-width: 580px;
+    margin: 1.8rem auto 3rem;
+    opacity: 0;
+    animation: fadeUp .8s .7s forwards;
+    line-height: 1.5;
+  }
+
+  .hero-subtitle strong {
+    color: var(--white);
+    font-style: normal;
+  }
+
+  .cta-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp .8s .9s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: .75rem;
+    background: var(--green);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 1.1rem 2.4rem;
+    border-radius: 4px;
+    text-decoration: none;
+    letter-spacing: .02em;
+    transition: all .25s;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%);
+    transition: transform .3s;
+  }
+
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(26,255,140,0.35); }
+
+  .btn-arrow { font-size: 1.1rem; }
+
+  .price-tag {
+    font-size: .85rem;
+    color: var(--gray);
+  }
+  .price-tag strong { color: var(--green); font-size: 1.1rem; }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 5rem;
+    opacity: 0;
+    animation: fadeUp .8s 1.1s forwards;
+  }
+
+  .stat {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: .75rem;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SOCIAL PROOF ── */
+  .proof-bar {
+    background: var(--dark2);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 1.2rem 2rem;
+    overflow: hidden;
+  }
+
+  .proof-track {
+    display: flex;
+    gap: 4rem;
+    animation: scroll 30s linear infinite;
+    white-space: nowrap;
+  }
+
+  .proof-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    font-size: .8rem;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    flex-shrink: 0;
+  }
+
+  .proof-dot { color: var(--green); font-size: 1rem; }
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 2rem; }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1.2rem;
+  }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--green);
+  }
+
+  /* ── PROBLEMA ── */
+  .problema { background: var(--dark2); }
+
+  .problema-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5px;
+    margin-top: 3rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .problema-item {
+    background: var(--dark2);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .problema-item::before {
+    content: '✗';
+    display: block;
+    font-size: 1.2rem;
+    color: rgba(255,80,80,0.6);
+    margin-bottom: .8rem;
+  }
+
+  .problema-item p {
+    font-size: 1rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  .problema-item p strong { color: var(--white); }
+
+  /* ── O QUE É ── */
+  .oque-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-top: 2rem;
+  }
+
+  .oque-visual {
+    position: relative;
+  }
+
+  .book-card {
+    background: linear-gradient(135deg, var(--dark3) 0%, #0d2318 100%);
+    border: 1px solid rgba(26,255,140,0.2);
+    border-radius: 8px;
+    padding: 3rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .book-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+
+  .book-titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    margin-bottom: .3rem;
+  }
+
+  .book-titulo span {
+    display: block;
+    color: var(--green);
+    font-size: 5rem;
+    -webkit-text-stroke: 2px var(--green);
+    color: transparent;
+    text-shadow: 0 0 40px rgba(26,255,140,0.5);
+  }
+
+  .book-meta {
+    font-size: .75rem;
+    color: var(--gray);
+    margin-top: 1.5rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .book-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    justify-content: center;
+    margin-top: 1.2rem;
+  }
+
+  .chip {
+    font-size: .7rem;
+    padding: .3rem .8rem;
+    border: 1px solid rgba(26,255,140,0.25);
+    border-radius: 100px;
+    color: var(--green);
+    letter-spacing: .08em;
+  }
+
+  .oque-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .oque-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .oque-icon {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(26,255,140,0.3);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .9rem;
+    flex-shrink: 0;
+    color: var(--green);
+    background: rgba(26,255,140,0.05);
+    margin-top: .1rem;
+  }
+
+  .oque-text h4 {
+    font-size: .95rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: .3rem;
+  }
+
+  .oque-text p {
+    font-size: .88rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* ── HISTÓRIAS ── */
+  .historias { background: var(--dark2); }
+
+  .historias-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    margin-top: 3rem;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .historia-card {
+    background: var(--dark2);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background .3s;
+  }
+
+  .historia-card:hover { background: var(--dark3); }
+
+  .historia-atleta {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: var(--green);
+    margin-bottom: .3rem;
+    letter-spacing: .03em;
+  }
+
+  .historia-sub {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--gray);
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .historia-texto {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: .95rem;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  .historia-texto strong { color: var(--white); font-style: normal; }
+
+  /* ── CAPÍTULOS ── */
+  .caps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    margin-top: 3rem;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .cap-item {
+    background: var(--dark);
+    padding: 1.8rem 2rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    transition: background .25s;
+  }
+
+  .cap-item:hover { background: var(--dark3); }
+
+  .cap-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: rgba(26,255,140,0.25);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 2.5rem;
+  }
+
+  .cap-info h4 {
+    font-size: .95rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: .3rem;
+  }
+
+  .cap-info p {
+    font-size: .82rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* ── PARA QUEM ── */
+  .paraquem { background: var(--dark2); }
+
+  .paraquem-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .paraquem-card {
+    border: 1px solid rgba(26,255,140,0.12);
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    background: rgba(26,255,140,0.03);
+    transition: border-color .3s, background .3s;
+  }
+
+  .paraquem-card:hover {
+    border-color: rgba(26,255,140,0.3);
+    background: rgba(26,255,140,0.06);
+  }
+
+  .paraquem-emoji { font-size: 2rem; margin-bottom: 1rem; display: block; }
+
+  .paraquem-card h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: .5rem;
+  }
+
+  .paraquem-card p {
+    font-size: .85rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  /* ── DIÁRIO ── */
+  .diario-preview {
+    background: var(--dark3);
+    border: 1px solid rgba(26,255,140,0.15);
+    border-radius: 8px;
+    padding: 2.5rem;
+    margin-top: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diario-preview::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+
+  .diario-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--green);
+    margin-bottom: .5rem;
+    letter-spacing: .05em;
+  }
+
+  .diario-sub {
+    font-size: .85rem;
+    color: var(--gray);
+    margin-bottom: 2rem;
+  }
+
+  .diario-campos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .campo {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .campo-label {
+    font-size: .7rem;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: .5rem;
+  }
+
+  .campo-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--green);
+  }
+
+  /* ── AUTORIA ── */
+  .autoria-box {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 3rem;
+    margin-top: 3rem;
+  }
+
+  .autoria-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--green-dark), var(--green-dim));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--white);
+    flex-shrink: 0;
+    border: 2px solid rgba(26,255,140,0.3);
+  }
+
+  .autoria-nome {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: .3rem;
+  }
+
+  .autoria-tag {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--green);
+    margin-bottom: 1rem;
+  }
+
+  .autoria-texto {
+    font-size: .9rem;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  .autoria-texto strong { color: var(--white); }
+
+  /* ── OFERTA ── */
+  .oferta {
+    background: var(--dark);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .oferta::before {
+    content: 'FLOW';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30vw;
+    color: rgba(26,255,140,0.03);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    white-space: nowrap;
+    letter-spacing: -.05em;
+  }
+
+  .oferta-box {
+    background: var(--dark2);
+    border: 1px solid rgba(26,255,140,0.2);
+    border-radius: 12px;
+    padding: 4rem 3rem;
+    max-width: 560px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .oferta-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    border-radius: 12px 12px 0 0;
+  }
+
+  .oferta-label {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    color: var(--green);
+    margin-bottom: 1rem;
+  }
+
+  .oferta-nome {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    margin-bottom: 2rem;
+  }
+
+  .oferta-nome span { color: var(--green); }
+
+  .oferta-lista {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+  }
+
+  .oferta-lista li {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    font-size: .9rem;
+    color: var(--gray);
+  }
+
+  .oferta-lista li::before {
+    content: '✓';
+    width: 20px;
+    height: 20px;
+    background: rgba(26,255,140,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .7rem;
+    color: var(--green);
+    flex-shrink: 0;
+  }
+
+  .oferta-lista li strong { color: var(--white); }
+
+  .oferta-preco {
+    margin-bottom: 2rem;
+  }
+
+  .preco-de {
+    font-size: .85rem;
+    color: var(--gray);
+    text-decoration: line-through;
+    margin-bottom: .3rem;
+  }
+
+  .preco-por {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .preco-por span {
+    font-size: 1.5rem;
+    vertical-align: super;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+  }
+
+  .preco-desc {
+    font-size: .8rem;
+    color: var(--gray);
+    margin-top: .3rem;
+  }
+
+  .btn-primary-lg {
+    display: block;
+    width: 100%;
+    background: var(--green);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    padding: 1.2rem;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: .02em;
+    transition: all .25s;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+
+  .btn-primary-lg:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 50px rgba(26,255,140,0.4);
+  }
+
+  .garantia {
+    font-size: .78rem;
+    color: var(--gray);
+    margin-top: .8rem;
+  }
+
+  .garantia strong { color: var(--white); }
+
+  /* ── FAQ ── */
+  .faq { background: var(--dark2); }
+
+  .faq-list {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .faq-item:last-child { border-bottom: none; }
+
+  .faq-q {
+    width: 100%;
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 1.5rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .95rem;
+    font-weight: 500;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    transition: background .2s;
+  }
+
+  .faq-q:hover { background: rgba(255,255,255,0.03); }
+
+  .faq-icon {
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(26,255,140,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    color: var(--green);
+    flex-shrink: 0;
+    transition: transform .3s;
+  }
+
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+    padding: 0 2rem;
+    color: var(--gray);
+    font-size: .9rem;
+    line-height: 1.7;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    padding: 0 2rem 1.5rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: .1em;
+    color: var(--green);
+    margin-bottom: .5rem;
+  }
+
+  .footer-text {
+    font-size: .78rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .7s, transform .7s;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── STICKY CTA ── */
+  .sticky-cta {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: .5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all .4s;
+    pointer-events: none;
+  }
+
+  .sticky-cta.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .sticky-btn {
+    background: var(--green);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: .85rem;
+    padding: .75rem 1.5rem;
+    border-radius: 100px;
+    text-decoration: none;
+    box-shadow: 0 8px 30px rgba(26,255,140,0.4);
+    transition: all .25s;
+    white-space: nowrap;
+  }
+
+  .sticky-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(26,255,140,0.5); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero-stats { gap: 2rem; }
+    .problema-grid { grid-template-columns: 1fr; }
+    .oque-grid { grid-template-columns: 1fr; }
+    .historias-grid { grid-template-columns: 1fr; }
+    .caps-grid { grid-template-columns: 1fr; }
+    .paraquem-grid { grid-template-columns: 1fr; }
+    .diario-campos { grid-template-columns: 1fr 1fr; }
+    .autoria-box { flex-direction: column; text-align: center; }
+    .oferta-box { padding: 2.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="badge">Psicologia do esporte aplicada ao futebol</div>
+  <div class="hero-eyebrow">Método Pro Amador apresenta</div>
+  <h1 class="hero-title">
+    Entrar no
+    <span>Flow</span>
+  </h1>
+  <p class="hero-subtitle">
+    O protocolo mental que separa o jogador que <strong>aparece nos jogos grandes</strong> do que some — independente do nível em que você joga.
+  </p>
+  <div class="cta-group">
+    <a href="https://kiwify.app/2hA6CzL" class="btn-primary">
+      Quero o ebook agora <span class="btn-arrow">↓</span>
+    </a>
+    <span class="price-tag">Por apenas <strong>R$ 37</strong> — acesso imediato</span>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">10</span>
+      <span class="stat-label">Capítulos</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">12</span>
+      <span class="stat-label">Exercícios práticos</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Histórias reais</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">10</span>
+      <span class="stat-label">Jogos no diário</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROOF BAR ── -->
+<div class="proof-bar">
+  <div class="proof-track">
+    <div class="proof-item"><span class="proof-dot">●</span> Ciência verificada</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Ronaldo Fenômeno</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Cristiano Ronaldo</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Michael Phelps</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Neymar Jr.</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Todos os níveis</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Diário do Flow</div>
+    <div class="proof-item"><span class="proof-dot">●</span> PPR personalizada</div>
+    <!-- duplica para scroll infinito -->
+    <div class="proof-item"><span class="proof-dot">●</span> Ciência verificada</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Ronaldo Fenômeno</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Cristiano Ronaldo</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Michael Phelps</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Neymar Jr.</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Todos os níveis</div>
+    <div class="proof-item"><span class="proof-dot">●</span> Diário do Flow</div>
+    <div class="proof-item"><span class="proof-dot">●</span> PPR personalizada</div>
+  </div>
+</div>
+
+<!-- ── PROBLEMA ── -->
+<section class="problema">
+  <div class="container">
+    <div class="section-label reveal">O problema</div>
+    <h2 class="section-title reveal">Você já jogou abaixo do que sabe que consegue. <em>Por quê?</em></h2>
+    <div class="problema-grid reveal">
+      <div class="problema-item">
+        <p>Você chega ao jogo <strong>ansioso ou travado</strong> — e não sabe como mudar isso antes de entrar em campo.</p>
+      </div>
+      <div class="problema-item">
+        <p>Erra um lance e o <strong>erro fica na cabeça</strong> — o resto do jogo vai por água abaixo.</p>
+      </div>
+      <div class="problema-item">
+        <p>Nos treinos você é excelente. No jogo que importa, <strong>você some</strong>.</p>
+      </div>
+      <div class="problema-item">
+        <p>Nunca te ensinaram nada sobre <strong>preparação mental</strong> — nem na escolinha, nem no clube.</p>
+      </div>
+    </div>
+    <p style="margin-top:2rem;color:var(--gray);font-family:'DM Serif Display',serif;font-style:italic;font-size:1.1rem;text-align:center;" class="reveal">
+      A diferença entre o seu pior jogo e o seu melhor jogo não é técnica. <strong style="color:var(--white);font-style:normal">É o estado mental.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ── O QUE É ── -->
+<section>
+  <div class="container">
+    <div class="oque-grid">
+      <div class="oque-visual reveal">
+        <div class="book-card">
+          <div class="book-titulo">
+            Entrar no
+            <span>FLOW</span>
+          </div>
+          <div class="book-meta">Método Pro Amador</div>
+          <div class="book-chips">
+            <span class="chip">Amador</span>
+            <span class="chip">Base</span>
+            <span class="chip">Semiprofissional</span>
+            <span class="chip">Profissional</span>
+          </div>
+        </div>
+      </div>
+      <div class="oque-list reveal">
+        <div class="section-label">O que você vai aprender</div>
+        <div class="oque-item">
+          <div class="oque-icon">⚡</div>
+          <div class="oque-text">
+            <h4>O que é o Flow — e como entrar nele</h4>
+            <p>A neurociência por trás do estado de alta performance. O que acontece no cérebro quando você "está ligado".</p>
+          </div>
+        </div>
+        <div class="oque-item">
+          <div class="oque-icon">🎯</div>
+          <div class="oque-text">
+            <h4>Sua Zona de Funcionamento Ótimo</h4>
+            <p>Cada atleta tem um nível ideal de ativação. Aprenda a identificar o seu e como chegar lá antes de cada jogo.</p>
+          </div>
+        </div>
+        <div class="oque-item">
+          <div class="oque-icon">🧠</div>
+          <div class="oque-text">
+            <h4>Respiração, visualização e self-talk</h4>
+            <p>As ferramentas que Cristiano, Phelps e Nadal usam. Adaptadas para a realidade do jogador de futebol.</p>
+          </div>
+        </div>
+        <div class="oque-item">
+          <div class="oque-icon">📋</div>
+          <div class="oque-text">
+            <h4>Sua PPR personalizada</h4>
+            <p>Pre-Performance Routine: o roteiro completo de 60 ou 15 minutos antes de qualquer partida.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HISTÓRIAS REAIS ── -->
+<section class="historias">
+  <div class="container">
+    <div class="section-label reveal">Histórias reais verificadas</div>
+    <h2 class="section-title reveal">O que os maiores viveram — <em>e o que provam</em></h2>
+    <div class="historias-grid reveal">
+      <div class="historia-card">
+        <div class="historia-atleta">Ronaldo Fenômeno</div>
+        <div class="historia-sub">Copa 98 vs Copa 2002 — a maior virada mental da história</div>
+        <p class="historia-texto">Em 98, perdeu a final pela falta de preparo mental. Em 2002, <strong>dois gols na final e artilheiro da Copa</strong>. A diferença entre os dois Ronaldos não era técnica — era o estado mental que ele aprendeu a controlar.</p>
+      </div>
+      <div class="historia-card">
+        <div class="historia-atleta">Michael Phelps</div>
+        <div class="historia-sub">28 medalhas olímpicas — o poder da visualização</div>
+        <p class="historia-texto">Praticava o "vídeo mental" duas vezes por dia desde a adolescência. Em 2008, seus óculos quebraram na final. Contou as braçadas de memória e <strong>ganhou o ouro batendo o recorde mundial</strong>.</p>
+      </div>
+      <div class="historia-card">
+        <div class="historia-atleta">Cristiano Ronaldo</div>
+        <div class="historia-sub">Portugal 3x3 Espanha — 3 gols em Flow</div>
+        <p class="historia-texto">Psicólogos que analisaram aquele jogo descrevem com precisão o estado de Flow: <strong>concentração absoluta, facilidade de execução, controle total</strong>. Incluindo a falta no último minuto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CAPÍTULOS ── -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">Conteúdo completo</div>
+    <h2 class="section-title reveal">10 capítulos. <em>Tudo escrito — não só tópicos.</em></h2>
+    <div class="caps-grid reveal">
+      <div class="cap-item">
+        <div class="cap-num">01</div>
+        <div class="cap-info">
+          <h4>O que é o Flow</h4>
+          <p>A ciência de Csikszentmihalyi, os 8 sinais do estado e a neuroquímica que o torna impossível de replicar.</p>
+        </div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">02</div>
+        <div class="cap-info">
+          <h4>Sua Zona Ótima</h4>
+          <p>ZOF, Lei de Yerkes-Dodson e perfil de ativação por posição. Por que não existe receita universal.</p>
+        </div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">03</div>
+        <div class="cap-info">
+          <h4>Respiração</h4>
+          <p>Box Breathing, técnica 4-7-8 e respiração de ativação. O interruptor mais rápido do sistema nervoso.</p>
+        </div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">04</div>
+        <div class="cap-info">
+          <h4>Visualização</h4>
+          <p>Por que o cérebro não diferencia imaginação vívida de execução real. Protocolo de visualização por posição.</p>
+        </div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">05</div>
+        <div class="cap-info">
+          <h4>Self-Talk e Ancoragem</h4>
+          <p>Diálogo interno estruturado e como criar o gatilho mental que induz o Flow antes de cada jogo.</p>
+        </div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">06</div>
+        <div class="cap-info">
+          <h4>Música</h4>
+          <p>A ciência de Karageorghis. BPM, fases da playlist e o silêncio estratégico de Cristiano Ronaldo.</p>
+        </div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">07</div>
+        <div class="cap-info">
+          <h4>Sono — o Flow começa antes</h4>
+          <p>Por que a noite anterior define o jogo de amanhã. Protocolo completo da véspera e manhã do jogo.</p>
+        </div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">08</div>
+        <div class="cap-info">
+          <h4>Montando sua PPR</h4>
+          <p>Protocolo de 60 minutos completo e versão de 15 minutos. Você sai com seu roteiro personalizado.</p>
+        </div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">09</div>
+        <div class="cap-info">
+          <h4>Flow durante o jogo</h4>
+          <p>Como manter, o que quebra e o protocolo de reset em 10 segundos depois de qualquer erro.</p>
+        </div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-num">10</div>
+        <div class="cap-info">
+          <h4>Flow coletivo</h4>
+          <p>Quando o time inteiro entra na zona. Como você contribui para o Flow do grupo — em qualquer posição.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PARA QUEM ── -->
+<section class="paraquem">
+  <div class="container">
+    <div class="section-label reveal">Para quem é</div>
+    <h2 class="section-title reveal">O Flow não respeita <em>categoria</em></h2>
+    <div class="paraquem-grid reveal">
+      <div class="paraquem-card">
+        <span class="paraquem-emoji">⚽</span>
+        <h4>Jogador amador</h4>
+        <p>Que disputa 2, 3 ou 4 jogos no mesmo fim de semana e quer manter o nível do primeiro ao último — sem cair física ou mentalmente quando mais importa.</p>
+      </div>
+      <div class="paraquem-card">
+        <span class="paraquem-emoji">🎯</span>
+        <h4>Atleta de base</h4>
+        <p>Que sabe que o funil até o profissional é enorme — e que cada jogo importante é uma oportunidade de se destacar ou desaparecer. Entrar no Flow nos momentos decisivos é o que separa quem avança de quem fica pelo caminho.</p>
+      </div>
+      <div class="paraquem-card">
+        <span class="paraquem-emoji">🏆</span>
+        <h4>Jogador profissional</h4>
+        <p>Que tem acesso ao psicólogo no clube mas raramente usa — por cultura, por medo ou por não saber como. Quem aprende a entrar no Flow de forma consciente transforma essa arma em diferencial real dentro e fora de campo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DIÁRIO ── -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">Exclusivo no ebook</div>
+    <h2 class="section-title reveal">O Diário do Flow — <em>jogo a jogo</em></h2>
+    <p class="reveal" style="color:var(--gray);max-width:580px;margin-bottom:0">10 registros estruturados para você mapear seu estado mental depois de cada partida. Em 10 jogos você vai conhecer seu Flow como nunca conheceu.</p>
+    <div class="diario-preview reveal">
+      <div class="diario-title">Jogo 1 de 10</div>
+      <div class="diario-sub">Preencha até 30 minutos depois de cada partida</div>
+      <div class="diario-campos">
+        <div class="campo">
+          <div class="campo-label">Ansiedade</div>
+          <div class="campo-val">_/10</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Flow atingido</div>
+          <div class="campo-val">_/10</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Uso da PPR</div>
+          <div class="campo-val">_/10</div>
+        </div>
+        <div class="campo">
+          <div class="campo-label">Performance</div>
+          <div class="campo-val">_/10</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AUTORIA ── -->
+<section style="background:var(--dark2)">
+  <div class="container">
+    <div class="section-label reveal">Quem está por trás</div>
+    <h2 class="section-title reveal">Criado por quem <em>viveu dentro</em></h2>
+    <div class="autoria-box reveal">
+      <div class="autoria-avatar">MP</div>
+      <div>
+        <div class="autoria-tag">Ex-atleta profissional · Fundador do Método Pro Amador</div>
+        <div class="autoria-nome">Método Pro Amador</div>
+        <p class="autoria-texto">
+          Conteúdo criado por um <strong>ex-atleta profissional</strong> que jogou nas categorias de base de grandes clubes e hoje ainda joga no futebol amador.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OFERTA ── -->
+<section class="oferta" id="oferta">
+  <div class="container">
+    <div class="oferta-box">
+      <div class="oferta-label">Oferta de lançamento</div>
+      <div class="oferta-nome">Entrar no <span>Flow</span></div>
+      <ul class="oferta-lista">
+        <li><strong>10 capítulos completos</strong> — teoria e prática</li>
+        <li><strong>12 exercícios</strong> — para aplicar no próximo jogo</li>
+        <li><strong>Histórias reais verificadas</strong> — Ronaldo, Phelps, CR7, Neymar</li>
+        <li><strong>Sua PPR personalizada</strong> — roteiro completo pré-jogo</li>
+        <li><strong>Diário do Flow</strong> — 10 registros jogo a jogo</li>
+        <li><strong>Análise dos 10 jogos</strong> — mapa do seu estado mental</li>
+        <li><strong>Para todos os níveis</strong> — amador, base, pro</li>
+      </ul>
+      <div class="oferta-preco">
+        <div class="preco-de">De R$ 97</div>
+        <div class="preco-por"><span>R$</span> 37</div>
+        <div class="preco-desc">Pagamento único · Acesso imediato · PDF completo</div>
+      </div>
+      <a href="https://kiwify.app/2hA6CzL" class="btn-primary-lg">Quero entrar no Flow agora →</a>
+      <div class="garantia">
+        <strong>Garantia de 7 dias.</strong> Se não gostar por qualquer motivo, devolvemos 100% do valor. Sem perguntas.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="faq">
+  <div class="container">
+    <div class="section-label reveal">Dúvidas frequentes</div>
+    <h2 class="section-title reveal">Perguntas</h2>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Esse ebook serve para jogador amador?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Sim. O Flow é um estado psicofisiológico humano — não tem categoria. O ebook inclui versão do protocolo de 15 minutos para quem joga sem estrutura de clube, além da versão completa de 60 minutos para quem tem mais tempo de preparação.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Funciona para atleta de base?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Sim. O atleta de base vive sob pressão constante — jogos decisivos, trocas de treinador, risco de dispensa. O Flow é a ferramenta que separa quem mantém o nível nessas situações de quem trava. O ebook tem um capítulo específico sobre como aplicar o protocolo nos momentos de maior pressão competitiva.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          É difícil de aplicar? Precisa de acompanhamento?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Não. Cada capítulo termina com um exercício prático que você faz sozinho, sem equipamento e sem acompanhamento. O Diário do Flow guia o processo de aprendizado jogo a jogo. Em 4 jogos você já vai sentir diferença.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          O conteúdo é científico ou só motivacional?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Científico. Cada ferramenta é baseada em pesquisa verificada — Csikszentmihalyi, Hanin, Karageorghis, Yerkes-Dodson. As histórias dos atletas são reais e com fonte. Nada de "acredite em você" sem embasamento.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Como recebo o ebook depois da compra?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Acesso imediato por e-mail. Você recebe o link para download do PDF logo após a confirmação do pagamento. O arquivo é seu para sempre — sem prazo de expiração.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Método Pro Amador</div>
+  <p class="footer-text">
+    Entrar no Flow · Psicologia do Esporte aplicada ao futebol<br>
+    Para jogadores de todos os níveis — amador, base, semiprofissional e profissional
+  </p>
+</footer>
+
+<!-- ── STICKY CTA ── -->
+<div class="sticky-cta" id="stickyCta">
+  <a href="https://kiwify.app/2hA6CzL" class="sticky-btn">Quero o ebook — R$ 37 →</a>
+</div>
+
+<script>
+  // FAQ toggle
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Sticky CTA
+  const stickyCta = document.getElementById('stickyCta');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 600) {
+      stickyCta.classList.add('show');
+    } else {
+      stickyCta.classList.remove('show');
+    }
+  });
+</script>
+</body>
+</html>
